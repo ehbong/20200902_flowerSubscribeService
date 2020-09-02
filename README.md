@@ -1,18 +1,5 @@
-Hello, My Friends  
-Thank you for having interest in this repository ! 
+Flower subscribe service App 
+꽃 구독 서비스 제공 사이트
 
-To use this application, 
-
-1. make dev.js file inside config folder 
-2. put mongoDB info into dev.js file 
-3. Type  " npm install " inside the root directory  ( Download Server Dependencies ) 
-4. Type " npm install " inside the client directory ( Download Front-end Dependencies )
-
-
-If you have problem, feel free to ask me ^^ 
-
-You can watch the tutorial for this app.
-
-https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber
-
-
+This App was created to study react, nodejs.
+이 앱은 리액트, 노드JS 공부를 위해 만들어졌습니다.
