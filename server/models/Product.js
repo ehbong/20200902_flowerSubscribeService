@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // 상품 테이블
 const productSchema = mongoose.Schema({
-    writer: {
+    seller: {
         type: Schema.Types.ObjectId,
         ref:'User'
     },
@@ -10,6 +10,9 @@ const productSchema = mongoose.Schema({
         unique: 1 
     },
     price: { // 가격
+        type:Number
+    },
+    cycle: { // 상품 제공 주기 (3일, 7일, 30일) 등등
         type:Number
     },
     thumbnail :{ // 썸네일

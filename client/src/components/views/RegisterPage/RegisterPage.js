@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -9,7 +9,10 @@ import {
   Form,
   Input,
   Button,
+  Select,
 } from 'antd';
+
+const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -36,6 +39,13 @@ const tailFormItemLayout = {
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
+
+
+  const [SellerInputView, setSellerInputView] = useState(false);
+
+  const sellerHandler = () => {
+    setSellerInputView(!SellerInputView);
+  }
   return (
 
     <Formik
@@ -61,6 +71,7 @@ function RegisterPage(props) {
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm Password is required')
       })}
+
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
 
@@ -71,14 +82,18 @@ function RegisterPage(props) {
             lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
-
-          dispatch(registerUser(dataToSubmit)).then(response => {
-            if (response.payload.success) {
-              props.history.push("/login");
-            } else {
-              alert(response.payload.err.errmsg)
-            }
-          })
+          if(SellerInputView){
+            dataToSubmit.storeName = values.storeName;
+            dataToSubmit.serviceArea = values.serviceArea;
+          }
+          console.log(dataToSubmit);
+          // dispatch(registerUser(dataToSubmit)).then(response => {
+          //   if (response.payload.success) {
+          //     props.history.push("/login");
+          //   } else {
+          //     alert(response.payload.err.errmsg)
+          //   }
+          // })
 
           setSubmitting(false);
         }, 500);
@@ -186,9 +201,52 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
+              {
+                SellerInputView &&
+                <React.Fragment>
+                  <Form.Item required label="Store name">
+                    <Input
+                      id="storeName"
+                      placeholder="Enter your Store Name"
+                      type="text"
+                      value={values.storeName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.storeName && touched.storeName ? 'text-input error' : 'text-input'
+                      }
+                    />
+                    {errors.storeName && touched.storeName && (
+                      <div className="input-feedback">{errors.storeName}</div>
+                    )}
+                  </Form.Item>
+                  <Form.Item required label="Service Area">
+                    <Select defaultValue="서울" style={{ width: 120 }} onChange={handleChange} onBlur={handleBlur}  name="serviceArea" required label="Service Area">
+                      <Option value="서울">서울</Option>
+                      <Option value="경기">경기</Option>
+                      <Option value="인천">인천</Option>
+                      <Option value="대전">대전</Option>
+                      <Option value="대구">대구</Option>
+                      <Option value="강원">강원</Option>
+                      <Option value="충북">충북</Option>
+                      <Option value="충남">충남</Option>
+                      <Option value="경북">경북</Option>
+                      <Option value="경남">경남</Option>
+                      <Option value="전북">전북</Option>
+                      <Option value="전남">전남</Option>
+                      <Option value="부산">부산</Option>
+                    </Select>
+                  </Form.Item>
+                </React.Fragment>
+              }
+
+
               <Form.Item {...tailFormItemLayout}>
                 <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   Submit
+                </Button>
+                <Button onClick={sellerHandler} type="danger" style={{ marginLeft:'30px'}}>
+                  { SellerInputView ? 'Change Customer' : 'Change Seller'}
                 </Button>
               </Form.Item>
             </Form>
