@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
@@ -54,7 +54,9 @@ function RegisterPage(props) {
         lastName: '',
         name: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        storeName: '',
+        serviceArea: '서울'
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string()
@@ -111,6 +113,12 @@ function RegisterPage(props) {
           handleSubmit,
           handleReset,
         } = props;
+
+        const handleSelect = (value) => {
+          console.log(value);
+          values.serviceArea = value;
+          handleBlur(value);
+        }
         return (
           <div className="app">
             <h2>Sign up</h2>
@@ -221,7 +229,7 @@ function RegisterPage(props) {
                     )}
                   </Form.Item>
                   <Form.Item required label="Service Area">
-                    <Select defaultValue="서울" style={{ width: 120 }} onChange={handleChange} onBlur={handleBlur}  name="serviceArea" required label="Service Area">
+                    <Select style={{ width: 120 }} onChange={handleSelect} onBlur={handleBlur}  name="serviceArea" value={values.serviceArea} required label="Service Area">
                       <Option value="서울">서울</Option>
                       <Option value="경기">경기</Option>
                       <Option value="인천">인천</Option>
