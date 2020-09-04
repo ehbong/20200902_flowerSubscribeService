@@ -81,7 +81,7 @@ function RegisterPage(props) {
             email: values.email,
             password: values.password,
             name: values.name,
-            lastname: values.lastname,
+            lastname: values.lastName,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
           if(SellerInputView){
@@ -89,13 +89,13 @@ function RegisterPage(props) {
             dataToSubmit.serviceArea = values.serviceArea;
           }
           console.log(dataToSubmit);
-          // dispatch(registerUser(dataToSubmit)).then(response => {
-          //   if (response.payload.success) {
-          //     props.history.push("/login");
-          //   } else {
-          //     alert(response.payload.err.errmsg)
-          //   }
-          // })
+          dispatch(registerUser(dataToSubmit)).then(response => {
+            if (response.payload.success) {
+              props.history.push("/login");
+            } else {
+              alert(response.payload.err.errmsg)
+            }
+          })
 
           setSubmitting(false);
         }, 500);
@@ -229,7 +229,7 @@ function RegisterPage(props) {
                     )}
                   </Form.Item>
                   <Form.Item required label="Service Area">
-                    <Select style={{ width: 120 }} onChange={handleSelect} onBlur={handleBlur}  name="serviceArea" value={values.serviceArea} required label="Service Area">
+                    <Select defaultValue="서울" style={{ width: 120 }} onChange={handleSelect} onBlur={handleBlur}  name="serviceArea" required label="Service Area">
                       <Option value="서울">서울</Option>
                       <Option value="경기">경기</Option>
                       <Option value="인천">인천</Option>

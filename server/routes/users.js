@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
+const { Seller } = require("../models/Seller");
 
 const { auth } = require("../middleware/auth");
 
@@ -22,14 +23,31 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-
-    const user = new User(req.body);
-
+    
+    console.log(req);
+    let paramData = req.body;
+    if(paramData.serviceArea){
+        paramData.role = 2;
+    }
+    const user = new User(paramData);
     user.save((err, doc) => {
         if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        });
+        console.log('유저등록성공');
+        console.log(doc);
+        if(paramData.serviceArea){
+            paramData.userId = doc._id; //유저 아이디 넣어서 Seller 정보 등록
+            const seller = new Seller(paramData);
+            seller.save((err, doc) => {
+                if (err) return res.json({ success: false, err });
+                return res.status(200).json({
+                    success: true
+                });
+            });
+        }else{
+            return res.status(200).json({
+                success: true
+            });
+        }
     });
 });
 
