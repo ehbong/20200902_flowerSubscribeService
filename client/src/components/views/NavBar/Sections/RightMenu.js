@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
-
+  
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
       if (response.status === 200) {
@@ -31,13 +31,27 @@ function RightMenu(props) {
       </Menu>
     )
   } else {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-      </Menu>
-    )
+    console.log(user.userData);
+    if(user.userData && user.userData.role == 2){
+      return (
+        <Menu mode={props.mode}>
+          <Menu.Item key="upload">
+          <a href="/product/list">product</a>
+          </Menu.Item>
+          <Menu.Item key="logout">
+            <a onClick={logoutHandler}>Logout</a>
+          </Menu.Item>
+        </Menu>
+      )
+    }else{
+      return (
+        <Menu mode={props.mode}>
+          <Menu.Item key="logout">
+            <a onClick={logoutHandler}>Logout</a>
+          </Menu.Item>
+        </Menu>
+      )
+    }
   }
 }
 

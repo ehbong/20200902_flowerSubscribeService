@@ -9,6 +9,9 @@ const productSchema = mongoose.Schema({
         type:String,
         unique: 1 
     },
+    discription: { // 상품 설명
+        type:String
+    },
     price: { // 가격
         type:Number
     },
