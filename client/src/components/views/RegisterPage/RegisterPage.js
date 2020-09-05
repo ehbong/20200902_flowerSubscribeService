@@ -1,16 +1,13 @@
+/** @format */
+
 import React, { useState } from "react";
 import moment from "moment";
-import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
 
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-} from 'antd';
+import { Form, Input, Button, Select } from "antd";
 
 const { Option } = Select;
 
@@ -40,90 +37,70 @@ const tailFormItemLayout = {
 function RegisterPage(props) {
   const dispatch = useDispatch();
 
-
   const [SellerInputView, setSellerInputView] = useState(false);
 
   const sellerHandler = () => {
     setSellerInputView(!SellerInputView);
-  }
+  };
   return (
-
     <Formik
       initialValues={{
-        email: '',
-        lastName: '',
-        name: '',
-        password: '',
-        confirmPassword: '',
-        storeName: '',
-        serviceArea: '서울'
+        email: "",
+        lastName: "",
+        name: "",
+        password: "",
+        confirmPassword: "",
+        storeName: "",
+        serviceArea: "서울",
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string()
-          .required('Name is required'),
-        lastName: Yup.string()
-          .required('Last Name is required'),
-        email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
-        password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
-          .required('Password is required'),
+        name: Yup.string().required("Name is required"),
+        lastName: Yup.string().required("Last Name is required"),
+        email: Yup.string().email("Email is invalid").required("Email is required"),
+        password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
         confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Confirm Password is required')
+          .oneOf([Yup.ref("password"), null], "Passwords must match")
+          .required("Confirm Password is required"),
       })}
-
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-
           let dataToSubmit = {
             email: values.email,
             password: values.password,
             name: values.name,
             lastname: values.lastName,
-            image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
+            image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
           };
-          if(SellerInputView){
+          if (SellerInputView) {
             dataToSubmit.storeName = values.storeName;
             dataToSubmit.serviceArea = values.serviceArea;
           }
           console.log(dataToSubmit);
-          dispatch(registerUser(dataToSubmit)).then(response => {
+          dispatch(registerUser(dataToSubmit)).then((response) => {
             if (response.payload.success) {
               props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg)
+              alert(response.payload.err.errmsg);
             }
-          })
+          });
 
           setSubmitting(false);
         }, 500);
       }}
     >
-      {props => {
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset,
-        } = props;
+      {(props) => {
+        const { values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset } = props;
 
-        const handleSelect = (value) => { // 값이 변한게 화면에 바로 반영되지 않음 수정 예정
+        const handleSelect = (value) => {
+          // 값이 변한게 화면에 바로 반영되지 않음 수정 예정
           console.log(value);
           values.serviceArea = value;
           handleBlur(value);
-        }
+        };
         return (
           <div className="app">
             <h2>Sign up</h2>
-            <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
-
+            <Form style={{ minWidth: "375px" }} {...formItemLayout} onSubmit={handleSubmit}>
               <Form.Item required label="Name">
                 <Input
                   id="name"
@@ -132,13 +109,9 @@ function RegisterPage(props) {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={
-                    errors.name && touched.name ? 'text-input error' : 'text-input'
-                  }
+                  className={errors.name && touched.name ? "text-input error" : "text-input"}
                 />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
-                )}
+                {errors.name && touched.name && <div className="input-feedback">{errors.name}</div>}
               </Form.Item>
 
               <Form.Item required label="Last Name">
@@ -149,16 +122,12 @@ function RegisterPage(props) {
                   value={values.lastName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={
-                    errors.lastName && touched.lastName ? 'text-input error' : 'text-input'
-                  }
+                  className={errors.lastName && touched.lastName ? "text-input error" : "text-input"}
                 />
-                {errors.lastName && touched.lastName && (
-                  <div className="input-feedback">{errors.lastName}</div>
-                )}
+                {errors.lastName && touched.lastName && <div className="input-feedback">{errors.lastName}</div>}
               </Form.Item>
 
-              <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
+              <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : "success"}>
                 <Input
                   id="email"
                   placeholder="Enter your Email"
@@ -166,16 +135,12 @@ function RegisterPage(props) {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
+                  className={errors.email && touched.email ? "text-input error" : "text-input"}
                 />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
+                {errors.email && touched.email && <div className="input-feedback">{errors.email}</div>}
               </Form.Item>
 
-              <Form.Item required label="Password" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
+              <Form.Item required label="Password" hasFeedback validateStatus={errors.password && touched.password ? "error" : "success"}>
                 <Input
                   id="password"
                   placeholder="Enter your password"
@@ -183,13 +148,9 @@ function RegisterPage(props) {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
-                  }
+                  className={errors.password && touched.password ? "text-input error" : "text-input"}
                 />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
+                {errors.password && touched.password && <div className="input-feedback">{errors.password}</div>}
               </Form.Item>
 
               <Form.Item required label="Confirm" hasFeedback>
@@ -200,17 +161,12 @@ function RegisterPage(props) {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={
-                    errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
-                  }
+                  className={errors.confirmPassword && touched.confirmPassword ? "text-input error" : "text-input"}
                 />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <div className="input-feedback">{errors.confirmPassword}</div>
-                )}
+                {errors.confirmPassword && touched.confirmPassword && <div className="input-feedback">{errors.confirmPassword}</div>}
               </Form.Item>
 
-              {
-                SellerInputView &&
+              {SellerInputView && (
                 <React.Fragment>
                   <Form.Item required label="Store name">
                     <Input
@@ -220,16 +176,12 @@ function RegisterPage(props) {
                       value={values.storeName}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className={
-                        errors.storeName && touched.storeName ? 'text-input error' : 'text-input'
-                      }
+                      className={errors.storeName && touched.storeName ? "text-input error" : "text-input"}
                     />
-                    {errors.storeName && touched.storeName && (
-                      <div className="input-feedback">{errors.storeName}</div>
-                    )}
+                    {errors.storeName && touched.storeName && <div className="input-feedback">{errors.storeName}</div>}
                   </Form.Item>
                   <Form.Item required label="Service Area">
-                    <Select defaultValue="서울" style={{ width: 120 }} onChange={handleSelect} onBlur={handleBlur}  name="serviceArea" required label="Service Area">
+                    <Select defaultValue="서울" style={{ width: 120 }} onChange={handleSelect} onBlur={handleBlur} name="serviceArea" required label="Service Area">
                       <Option value="서울">서울</Option>
                       <Option value="경기">경기</Option>
                       <Option value="인천">인천</Option>
@@ -246,15 +198,14 @@ function RegisterPage(props) {
                     </Select>
                   </Form.Item>
                 </React.Fragment>
-              }
-
+              )}
 
               <Form.Item {...tailFormItemLayout}>
                 <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   Submit
                 </Button>
-                <Button onClick={sellerHandler} type="danger" style={{ marginLeft:'30px'}}>
-                  { SellerInputView ? 'Change Customer' : 'Change Seller'}
+                <Button onClick={sellerHandler} type="danger" style={{ marginLeft: "30px" }}>
+                  {SellerInputView ? "Change Customer" : "Change Seller"}
                 </Button>
               </Form.Item>
             </Form>
@@ -263,7 +214,6 @@ function RegisterPage(props) {
       }}
     </Formik>
   );
-};
+}
 
-
-export default RegisterPage
+export default RegisterPage;

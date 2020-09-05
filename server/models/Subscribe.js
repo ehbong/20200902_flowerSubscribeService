@@ -1,22 +1,31 @@
-const mongoose = require('mongoose');
-// 구독 테이블 
-const subscribeSchema = mongoose.Schema({
-    productId: { //상품 Id
-        type: Schema.Types.ObjectId,
-        ref:'Product'
-    },
-    userId: { // 유저 Id
-        type: Schema.Types.ObjectId,
-        ref:'User'
-    },
-    contractMonth : { // 구독 개월
-        type: String,
-    },
-    contractUse : { // 구독 유효 여부
-        type: String,
-    }
-}, { timestamps: true })
+/** @format */
 
-const Subscribe = mongoose.model('Subscribe', subscribeSchema);
+const mongoose = require("mongoose");
+// 구독 테이블
+const subscribeSchema = mongoose.Schema(
+  {
+    productId: {
+      //상품 Id
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    userId: {
+      // 유저 Id
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    contractMonth: {
+      // 구독 개월
+      type: String,
+    },
+    contractUse: {
+      // 구독 유효 여부
+      type: String,
+    },
+  },
+  { timestamps: true },
+);
 
-module.exports = { Subscribe }
+const Subscribe = mongoose.model("Subscribe", subscribeSchema);
+
+module.exports = { Subscribe };

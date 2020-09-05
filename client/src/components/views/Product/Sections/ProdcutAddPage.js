@@ -1,35 +1,27 @@
-import React from 'react'
-import { Typography, Button, Form, message, Input, Icon } from 'antd';
+/** @format */
+
+import React from "react";
+import { Typography, Button, Form, message, Input, Icon } from "antd";
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-
 function ProdcutAddPage() {
-
-
-    return (
-        <div style={{ maxWidth:'700px', margin:'2rem auto'}}>
-            <div style={{ textAlign:'center', marginBottom:'2rem'}}>
-                <Title level={2}>Add Product</Title>
-            </div>
-            <Form onSubmit>
-                
-                <label htmlFor="">Title</label>
-                <Input 
-                    onChange
-                    value
-                />
-                <br/>
-                <br/>
-                <label htmlFor="">Description</label>
-                <TextArea
-                    onChange
-                    value
-                />
-                <br/>
-                <br/>
-                {/* <select onChange={onPrivateChange}>
+  return (
+    <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <Title level={2}>Add Product</Title>
+      </div>
+      <Form onSubmit>
+        <label htmlFor="">Title</label>
+        <Input onChange value />
+        <br />
+        <br />
+        <label htmlFor="">Description</label>
+        <TextArea onChange value />
+        <br />
+        <br />
+        {/* <select onChange={onPrivateChange}>
                     {PrivateList.map((item, index)=>(
                         <option key={index} value={item.value}>{item.label}</option>
                     ))}
@@ -40,9 +32,10 @@ function ProdcutAddPage() {
                         <option key={index} value={item.value}>{item.label}</option>
                     ))}
                 </select> */}
-                <br/><br/>
-                <div style={{ display:'flex', justifyContent:'space-between'}}>
-                    {/* <Dropzone 
+        <br />
+        <br />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          {/* <Dropzone 
                     onDrop={onDrop}
                     multiple={false}
                     maxSize={10000000000}>
@@ -54,22 +47,21 @@ function ProdcutAddPage() {
                             </div>
                         )}
                     </Dropzone> */}
-                    {/* {ThumbnailPath &&
+          {/* {ThumbnailPath &&
                         <div>
                             <img src={`http://localhost:5000/${ThumbnailPath}`} alt="thumbnail"/>
                         </div>
                     } */}
-                    이미지 등록
-                </div>
-                <br/>
-                <br/>
-                <Button type="primary" size="large" onClick>
-                    Submit
-                </Button>
-
-            </Form>
+          이미지 등록
         </div>
-    )
+        <br />
+        <br />
+        <Button type="primary" size="large" onClick>
+          Submit
+        </Button>
+      </Form>
+    </div>
+  );
 }
 
-export default ProdcutAddPage
+export default ProdcutAddPage;

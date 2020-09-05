@@ -1,4 +1,6 @@
-const express = require('express');
+/** @format */
+
+const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
 const { Seller } = require("../models/Seller");
@@ -10,80 +12,76 @@ const { auth } = require("../middleware/auth");
 //=================================
 
 router.get("/auth", auth, (req, res) => {
-    res.status(200).json({
-        _id: req.user._id,
-        isAdmin: req.user.role === 0 ? false : true,
-        isAuth: true,
-        email: req.user.email,
-        name: req.user.name,
-        lastname: req.user.lastname,
-        role: req.user.role,
-        image: req.user.image,
-    });
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image,
+  });
 });
 
 router.post("/register", (req, res) => {
-    
-    console.log(req);
-    let paramData = req.body;
-    if(paramData.serviceArea){
-        paramData.role = 2;
-    }
-    const user = new User(paramData);
-    user.save((err, doc) => {
+  console.log(req);
+  let paramData = req.body;
+  if (paramData.serviceArea) {
+    paramData.role = 2;
+  }
+  const user = new User(paramData);
+  user.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    console.log("유저등록성공");
+    console.log(doc);
+    if (paramData.serviceArea) {
+      paramData.userId = doc._id; //유저 아이디 넣어서 Seller 정보 등록
+      const seller = new Seller(paramData);
+      seller.save((err, doc) => {
         if (err) return res.json({ success: false, err });
-        console.log('유저등록성공');
-        console.log(doc);
-        if(paramData.serviceArea){
-            paramData.userId = doc._id; //유저 아이디 넣어서 Seller 정보 등록
-            const seller = new Seller(paramData);
-            seller.save((err, doc) => {
-                if (err) return res.json({ success: false, err });
-                return res.status(200).json({
-                    success: true
-                });
-            });
-        }else{
-            return res.status(200).json({
-                success: true
-            });
-        }
-    });
+        return res.status(200).json({
+          success: true,
+        });
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+      });
+    }
+  });
 });
 
 router.post("/login", (req, res) => {
-    User.findOne({ email: req.body.email }, (err, user) => {
-        if (!user)
-            return res.json({
-                loginSuccess: false,
-                message: "Auth failed, email not found"
-            });
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user)
+      return res.json({
+        loginSuccess: false,
+        message: "Auth failed, email not found",
+      });
 
-        user.comparePassword(req.body.password, (err, isMatch) => {
-            if (!isMatch)
-                return res.json({ loginSuccess: false, message: "Wrong password" });
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) return res.json({ loginSuccess: false, message: "Wrong password" });
 
-            user.generateToken((err, user) => {
-                if (err) return res.status(400).send(err);
-                res.cookie("w_authExp", user.tokenExp);
-                res
-                    .cookie("w_auth", user.token)
-                    .status(200)
-                    .json({
-                        loginSuccess: true, userId: user._id
-                    });
-            });
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err);
+        res.cookie("w_authExp", user.tokenExp);
+        res.cookie("w_auth", user.token).status(200).json({
+          loginSuccess: true,
+          userId: user._id,
         });
+      });
     });
+  });
 });
 
 router.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).send({
-            success: true
-        });
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
     });
+  });
 });
 
 module.exports = router;
