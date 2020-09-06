@@ -1,7 +1,8 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message, Input, Icon, Select } from "antd";
+import { Typography, Button, Form, message, Input, Icon, Row, Col, Select, InputNumber } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -12,6 +13,16 @@ function ProdcutAddPage() {
   const [Description, setDescription] = useState("");
   const [Price, setPrice] = useState(0);
   const [Quantity, setQuantity] = useState(0);
+
+  const changePriceHandler = (value) => {
+    console.log(value);
+    setPrice(value);
+  };
+
+  const changeQuantityHandler = (value) => {
+    console.log(value);
+    setQuantity(value);
+  };
 
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
@@ -27,16 +38,36 @@ function ProdcutAddPage() {
         <TextArea onChange value={Description} />
         <br />
         <br />
-        <label htmlFor="">Price</label>
-        <Input onChange value={Price} />
-        <br />
-        <br />
-        <label htmlFor="">Quantity</label>
-        <Input onChange value={Quantity} />
+        <Row gutter={16}>
+          <Col span={8}>
+            <label htmlFor="productPrice">Price</label>
+          </Col>
+          <Col span={6}>
+            <label htmlFor="productPrice">Quantity</label>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={8}>
+            <InputNumber
+              id="productPrice"
+              min={1000}
+              step={1000}
+              style={{ width: "80%" }}
+              defaultValue={10000}
+              formatter={(value) => `￦ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\￦\s?|(,*)/g, "")}
+              onChange={changePriceHandler}
+            />
+          </Col>
+          <Col span={6}>
+            <InputNumber id="productPrice" min={0} onChange={changeQuantityHandler} value={Quantity} />
+          </Col>
+        </Row>
         <br />
         <br />
         <Form.Item required label="Service cycle">
-          <Select defaultValue="1w" style={{ width: 120 }} onChange onBlur name="serviceArea" required label="Service Area">
+          <Select defaultValue="1w" style={{ width: 120 }} onChange name="serviceArea" required label="Service Area">
             <Option value="1">1 day</Option>
             <Option value="3">3 day</Option>
             <Option value="1w">1 week</Option>
