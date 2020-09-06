@@ -28,6 +28,14 @@ const productSchema = mongoose.Schema({
     // 썸네일
     type: String,
   },
+  quantity: {
+    // 판매수량
+    type: Number,
+  },
+  status: {
+    // 판매여부 1(yes) or 0(no)
+    type: Number,
+  },
 });
 
 const Product = mongoose.model("Product", productSchema);

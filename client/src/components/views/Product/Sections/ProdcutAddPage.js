@@ -1,12 +1,18 @@
 /** @format */
 
-import React from "react";
-import { Typography, Button, Form, message, Input, Icon } from "antd";
+import React, { useState, useEffect } from "react";
+import { Typography, Button, Form, message, Input, Icon, Select } from "antd";
 
 const { Title } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 function ProdcutAddPage() {
+  const [ProductTitle, setProductTitle] = useState("");
+  const [Description, setDescription] = useState("");
+  const [Price, setPrice] = useState(0);
+  const [Quantity, setQuantity] = useState(0);
+
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
@@ -14,13 +20,31 @@ function ProdcutAddPage() {
       </div>
       <Form onSubmit>
         <label htmlFor="">Title</label>
-        <Input onChange value />
+        <Input onChange value={ProductTitle} />
         <br />
         <br />
         <label htmlFor="">Description</label>
-        <TextArea onChange value />
+        <TextArea onChange value={Description} />
         <br />
         <br />
+        <label htmlFor="">Price</label>
+        <Input onChange value={Price} />
+        <br />
+        <br />
+        <label htmlFor="">Quantity</label>
+        <Input onChange value={Quantity} />
+        <br />
+        <br />
+        <Form.Item required label="Service cycle">
+          <Select defaultValue="1w" style={{ width: 120 }} onChange onBlur name="serviceArea" required label="Service Area">
+            <Option value="1">1 day</Option>
+            <Option value="3">3 day</Option>
+            <Option value="1w">1 week</Option>
+            <Option value="10">10 day</Option>
+            <Option value="hm">half month</Option>
+            <Option value="1m">1 month</Option>
+          </Select>
+        </Form.Item>
         {/* <select onChange={onPrivateChange}>
                     {PrivateList.map((item, index)=>(
                         <option key={index} value={item.value}>{item.label}</option>
