@@ -32,6 +32,7 @@ router.post("/uploadfiles", (req, res) => {
   console.log("업로드 라우터");
   //console.log(res);
   // 이미지를 서버에 저장한다.
+  // 업로드 에러 수정 예정
   upload(req, res, (err) => {
     console.log(err);
     if (err) {
