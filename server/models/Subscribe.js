@@ -1,6 +1,8 @@
 /** @format */
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 // 구독 테이블
 const subscribeSchema = mongoose.Schema(
   {

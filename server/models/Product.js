@@ -1,6 +1,8 @@
 /** @format */
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 // 상품 테이블
 const productSchema = mongoose.Schema({
   seller: {

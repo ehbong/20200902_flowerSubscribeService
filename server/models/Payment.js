@@ -1,6 +1,8 @@
 /** @format */
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 // 결제 테이블
 const paymentSchema = mongoose.Schema(
   {

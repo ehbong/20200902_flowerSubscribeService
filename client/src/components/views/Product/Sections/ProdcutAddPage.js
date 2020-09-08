@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, message, Input, Icon, Row, Col, Select, InputNumber, Upload, Modal } from "antd";
 import { UserOutlined, LockOutlined, PlusOutlined } from "@ant-design/icons";
+import Axios from "axios";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -59,6 +60,28 @@ function ProdcutAddPage() {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+
+  const handleFileupload = (file) => {
+    console.log(file);
+    let formData = new FormData();
+    const config = {
+      header: { "content-type": "multipart/form-data" },
+    };
+    formData.append("file", file[0]);
+
+    Axios.post("/api/product/uploadfiles", formData, config).then((res) => {
+      console.log(res);
+      if (res.data.success) {
+        console.log(res);
+        let variable = {
+          url: res.data.url,
+          fileName: res.data.fileName,
+        };
+      } else {
+        alert("사진 업로드를 실패했습니다.");
+      }
+    });
+  };
 
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
@@ -126,7 +149,7 @@ function ProdcutAddPage() {
         <br />
         <br />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card" fileList={FileList} onPreview={handlePreview} onChange={handleChange}>
+          <Upload action={handleFileupload} listType="picture-card" fileList={FileList} onPreview={handlePreview} onChange={handleChange}>
             {FileList.length >= 8 ? null : uploadButton}
           </Upload>
           <Modal visible={PreviewVisible} title={PreviewTitle} footer={null} onCancel={handleCancel}>

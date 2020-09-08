@@ -1,6 +1,8 @@
 /** @format */
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 // 이미지 테이블
 const imageSchema = mongoose.Schema(
   {
