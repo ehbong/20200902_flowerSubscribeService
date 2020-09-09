@@ -29,19 +29,13 @@ const upload = multer({ storage: storage }).single("file");
 //             Product
 //=================================
 router.post("/uploadfiles", (req, res) => {
-  console.log("업로드 라우터");
-  //console.log(res);
-  // 이미지를 서버에 저장한다.
-  // 업로드 에러 수정 예정
+  console.log(32, res.req.file);
   upload(req, res, (err) => {
-    console.log(err);
+    console.log(34, err);
     if (err) {
       return res.json({ success: false, err });
     }
-    console.log(res.req);
-    // const reqObj = parse(res.req);
-    // console.log(reqObj);
-    //return res.json({ success: true, url: reqObj.file.path, filename: reqObj.file.filename });
+    return res.json({ success: true, url: res.req.file.path, filename: res.req.file.filename });
   });
 });
 

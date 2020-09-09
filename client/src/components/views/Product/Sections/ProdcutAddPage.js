@@ -61,13 +61,13 @@ function ProdcutAddPage() {
     </div>
   );
 
-  const handleFileupload = (file) => {
+  const handleFileupload = function (file) {
     console.log(file);
     let formData = new FormData();
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
-    formData.append("file", file[0]);
+    formData.append("file", file);
 
     Axios.post("/api/product/uploadfiles", formData, config).then((res) => {
       console.log(res);
@@ -149,7 +149,7 @@ function ProdcutAddPage() {
         <br />
         <br />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Upload action={handleFileupload} listType="picture-card" fileList={FileList} onPreview={handlePreview} onChange={handleChange}>
+          <Upload action="/api/product/uploadfiles" listType="picture-card" fileList={FileList} onPreview={handlePreview} onChange={handleChange}>
             {FileList.length >= 8 ? null : uploadButton}
           </Upload>
           <Modal visible={PreviewVisible} title={PreviewTitle} footer={null} onCancel={handleCancel}>
