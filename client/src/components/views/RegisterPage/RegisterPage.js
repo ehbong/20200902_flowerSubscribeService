@@ -92,7 +92,6 @@ function RegisterPage(props) {
         const { values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset } = props;
 
         const handleSelect = (value) => {
-          // 값이 변한게 화면에 바로 반영되지 않음 수정 예정
           console.log(value);
           values.serviceArea = value;
           handleBlur(value);

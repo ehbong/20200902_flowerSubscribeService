@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, message, Input, Icon, Row, Col, Select, InputNumber, Upload, Modal } from "antd";
 import { UserOutlined, LockOutlined, PlusOutlined } from "@ant-design/icons";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -19,6 +20,7 @@ function getBase64(file) {
 }
 
 function ProdcutAddPage() {
+  const user = useSelector((state) => state.user);
   const [ProductTitle, setProductTitle] = useState("");
   const [Description, setDescription] = useState("");
   const [Price, setPrice] = useState(0);
@@ -27,6 +29,7 @@ function ProdcutAddPage() {
   const [PreviewImage, setPreviewImage] = useState("");
   const [PreviewVisible, setPreviewVisible] = useState(false);
   const [PreviewTitle, setPreviewTitle] = useState("");
+  const [ServiceCycle, setServiceCycle] = useState("1");
 
   const changePriceHandler = (value) => {
     console.log(value);
@@ -36,6 +39,13 @@ function ProdcutAddPage() {
   const changeQuantityHandler = (value) => {
     console.log(value);
     setQuantity(value);
+  };
+
+  const changeProductTitleHandler = (value) => {
+    setProductTitle(value);
+  };
+  const changeDescriptionHandler = (value) => {
+    setDescription(value);
   };
 
   const handlePreview = async (file) => {
@@ -83,18 +93,34 @@ function ProdcutAddPage() {
     });
   };
 
+  const changeCycleHandle = (value) => {};
+
+  const onSubmitHandle = (e) => {
+    e.preventDefault();
+
+    const variable = {
+      seller: user.userData._id,
+      name: ProductTitle,
+      discription: Description,
+      price: Price,
+      cycle: ServiceCycle,
+      quantity: Quantity,
+      status: 0,
+    };
+  };
+
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <Title level={2}>Add Product</Title>
       </div>
-      <Form onSubmit>
+      <Form onSubmit={onSubmitHandle}>
         <label htmlFor="">Title</label>
-        <Input onChange value={ProductTitle} />
+        <Input onChange={changeProductTitleHandler} value={ProductTitle} />
         <br />
         <br />
         <label htmlFor="">Description</label>
-        <TextArea onChange value={Description} />
+        <TextArea onChange={changeDescriptionHandler} value={Description} />
         <br />
         <br />
         <Row gutter={16}>
@@ -126,7 +152,7 @@ function ProdcutAddPage() {
         <br />
         <br />
         <Form.Item required label="Service cycle">
-          <Select defaultValue="1w" style={{ width: 120 }} onChange name="serviceArea" required label="Service Area">
+          <Select defaultValue="1w" style={{ width: 120 }} onChange={changeCycleHandle} name="serviceArea" required label="Service cycle">
             <Option value="1">1 day</Option>
             <Option value="3">3 day</Option>
             <Option value="1w">1 week</Option>
