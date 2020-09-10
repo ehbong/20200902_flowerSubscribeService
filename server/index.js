@@ -31,10 +31,10 @@ app.use(cors());
 
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 //to get json data
 // support parsing of application/json type post data
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(cookieParser());
 
 app.use("/api/users", require("./routes/users"));

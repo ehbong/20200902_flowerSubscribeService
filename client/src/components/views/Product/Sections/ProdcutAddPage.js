@@ -19,7 +19,7 @@ function getBase64(file) {
   });
 }
 
-function ProdcutAddPage() {
+function ProdcutAddPage(props) {
   const user = useSelector((state) => state.user);
   const [ProductTitle, setProductTitle] = useState("");
   const [Description, setDescription] = useState("");
@@ -32,20 +32,18 @@ function ProdcutAddPage() {
   const [ServiceCycle, setServiceCycle] = useState("1");
 
   const changePriceHandler = (value) => {
-    console.log(value);
     setPrice(value);
   };
 
   const changeQuantityHandler = (value) => {
-    console.log(value);
     setQuantity(value);
   };
 
-  const changeProductTitleHandler = (value) => {
-    setProductTitle(value);
+  const changeProductTitleHandler = (e) => {
+    setProductTitle(e.currentTarget.value);
   };
-  const changeDescriptionHandler = (value) => {
-    setDescription(value);
+  const changeDescriptionHandler = (e) => {
+    setDescription(e.currentTarget.value);
   };
 
   const handlePreview = async (file) => {
@@ -63,14 +61,14 @@ function ProdcutAddPage() {
   };
 
   const handleCancel = () => setPreviewVisible(false);
-
+  // 업로드 버튼
   const uploadButton = (
     <div>
       <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
-
+  // 파일 업로드 함수 : 현재 사용 안함
   const handleFileupload = function (file) {
     console.log(file);
     let formData = new FormData();
@@ -93,20 +91,34 @@ function ProdcutAddPage() {
     });
   };
 
-  const changeCycleHandle = (value) => {};
-
+  const changeCycleHandle = (value) => {
+    setServiceCycle(value);
+  };
+  // SUBMIT 처리 함수
   const onSubmitHandle = (e) => {
     e.preventDefault();
 
     const variable = {
       seller: user.userData._id,
-      name: ProductTitle,
+      title: ProductTitle,
       discription: Description,
       price: Price,
       cycle: ServiceCycle,
       quantity: Quantity,
+      images: FileList,
       status: 0,
     };
+
+    Axios.post("/api/product/add", variable).then((res) => {
+      console.log(res);
+      if (res.data.success) {
+        setTimeout(() => {
+          props.history.push("/product/list"); // 상품목록으로 이동
+        }, 3000);
+      } else {
+        alert("상품 등록에 실패했습니다.");
+      }
+    });
   };
 
   return (
@@ -115,10 +127,12 @@ function ProdcutAddPage() {
         <Title level={2}>Add Product</Title>
       </div>
       <Form onSubmit={onSubmitHandle}>
+        {/* 상품명 */}
         <label htmlFor="">Title</label>
         <Input onChange={changeProductTitleHandler} value={ProductTitle} />
         <br />
         <br />
+        {/* 상품 설명 */}
         <label htmlFor="">Description</label>
         <TextArea onChange={changeDescriptionHandler} value={Description} />
         <br />
@@ -134,6 +148,7 @@ function ProdcutAddPage() {
 
         <Row gutter={16}>
           <Col span={8}>
+            {/* 상품가격 */}
             <InputNumber
               id="productPrice"
               min={1000}
@@ -146,32 +161,23 @@ function ProdcutAddPage() {
             />
           </Col>
           <Col span={6}>
+            {/* 상품 판매 수량 */}
             <InputNumber id="productQuantity" min={0} onChange={changeQuantityHandler} value={Quantity} />
           </Col>
         </Row>
         <br />
         <br />
+        {/* 상품 제공주기 */}
         <Form.Item required label="Service cycle">
           <Select defaultValue="1w" style={{ width: 120 }} onChange={changeCycleHandle} name="serviceArea" required label="Service cycle">
             <Option value="1">1 day</Option>
             <Option value="3">3 day</Option>
-            <Option value="1w">1 week</Option>
+            <Option value="7">1 week</Option>
             <Option value="10">10 day</Option>
-            <Option value="hm">half month</Option>
-            <Option value="1m">1 month</Option>
+            <Option value="15">half month</Option>
+            <Option value="30">1 month</Option>
           </Select>
         </Form.Item>
-        {/* <select onChange={onPrivateChange}>
-                    {PrivateList.map((item, index)=>(
-                        <option key={index} value={item.value}>{item.label}</option>
-                    ))}
-                </select>
-                <br/><br/>
-                <select onChange={onCategoryChange}>
-                    {CategoryList.map((item, index)=>(
-                        <option key={index} value={item.value}>{item.label}</option>
-                    ))}
-                </select> */}
         <br />
         <br />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -184,7 +190,7 @@ function ProdcutAddPage() {
         </div>
         <br />
         <br />
-        <Button type="primary" size="large" onClick>
+        <Button type="primary" size="large" onClick={onSubmitHandle}>
           Submit
         </Button>
       </Form>

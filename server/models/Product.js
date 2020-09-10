@@ -9,10 +9,9 @@ const productSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  name: {
+  title: {
     // 상품이름
     type: String,
-    unique: 1,
   },
   discription: {
     // 상품 설명
