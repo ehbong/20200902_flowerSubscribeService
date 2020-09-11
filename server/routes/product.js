@@ -79,4 +79,17 @@ router.post("/add", async (req, res) => {
   });
 });
 
+// 상품목록 가져오기 판매자
+router.get("/list", (req, res) => {
+  Product.find({ seller: req.body.seller })
+    .populate("seller")
+    .exec((err, product) => {
+      if (err) return res.status(400).json({ success: false, err });
+      return res.status(200).json({
+        success: true,
+        product,
+      });
+    });
+});
+
 module.exports = router;

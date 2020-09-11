@@ -7,6 +7,18 @@ import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
 function ProductPage(props) {
   const [Products, setProducts] = useState([]);
 
+  useEffect(() => {
+    let variable = { seller: localStorage.getItem("userId") };
+    axios.get("/api/product/list", variable).then((res) => {
+      if (res.data.success) {
+        console.log(res.data);
+        setProducts(res.data.product);
+      } else {
+        alert("상품목록 가져오기를 실패 했습니다.");
+      }
+    });
+  }, []);
+
   const IconText = ({ icon, text }) => (
     <Space>
       {React.createElement(icon)}
