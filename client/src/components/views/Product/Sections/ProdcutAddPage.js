@@ -109,7 +109,7 @@ function ProdcutAddPage(props) {
       status: 0,
     };
 
-    Axios.post("/api/product/add", variable).then((res) => {
+    Axios.post("/api/product", variable).then((res) => {
       console.log(res);
       if (res.data.success) {
         setTimeout(() => {

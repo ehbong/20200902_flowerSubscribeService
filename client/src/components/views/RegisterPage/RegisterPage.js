@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import moment from "moment";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
@@ -89,7 +89,7 @@ function RegisterPage(props) {
       }}
     >
       {(props) => {
-        const { values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset } = props;
+        const { values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = props;
 
         const handleSelect = (value) => {
           console.log(value);

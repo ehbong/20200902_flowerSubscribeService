@@ -40,7 +40,7 @@ router.post("/uploadfiles", (req, res) => {
   });
 });
 // 상품 추가
-router.post("/add", async (req, res) => {
+router.post("", async (req, res) => {
   // 트랜젝션 생성을 위한 설정
   const SESSION = await db.startSession();
   // 트랜젝션 세션 생성
@@ -80,8 +80,24 @@ router.post("/add", async (req, res) => {
 });
 
 // 상품목록 가져오기 판매자
-router.get("/list", (req, res) => {
-  Product.find({ seller: req.body.seller })
+router.get("/seller/:id", (req, res) => {
+  const sellerId = req.params.id;
+
+  Product.find({ seller: sellerId })
+    .populate("seller")
+    .exec((err, product) => {
+      if (err) return res.status(400).json({ success: false, err });
+      return res.status(200).json({
+        success: true,
+        product,
+      });
+    });
+});
+// 상품상세 가져오기
+router.get("/:id", (req, res) => {
+  const productId = req.params.id;
+
+  Product.find({ _id: productId })
     .populate("seller")
     .exec((err, product) => {
       if (err) return res.status(400).json({ success: false, err });

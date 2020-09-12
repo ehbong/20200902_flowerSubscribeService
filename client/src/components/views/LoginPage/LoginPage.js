@@ -66,7 +66,7 @@ function LoginPage(props) {
       }}
     >
       {(props) => {
-        const { values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset } = props;
+        const { values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = props;
         return (
           <div className="app">
             <Title level={2}>Log In</Title>
