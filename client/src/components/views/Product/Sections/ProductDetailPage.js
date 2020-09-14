@@ -4,7 +4,7 @@ import Axios from "axios";
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Row, Col, Image, Typography, Descriptions, Button } from "antd";
+import { Image, Typography, Descriptions, Button } from "antd";
 const { Title } = Typography;
 
 function ProductDetailPage(props) {
@@ -46,6 +46,8 @@ function ProductDetailPage(props) {
             <Descriptions.Item label="Title">{Product.title}</Descriptions.Item>
             <Descriptions.Item label="price">{Product.price}</Descriptions.Item>
             <Descriptions.Item label="delivery cycle">{`${Product.cycle} day`}</Descriptions.Item>
+            <Descriptions.Item label="size">{Product.size}</Descriptions.Item>
+            <Descriptions.Item label="configuration">{Product.configuration}</Descriptions.Item>
             <Descriptions.Item label="discription">{Product.discription}</Descriptions.Item>
           </Descriptions>
         </div>

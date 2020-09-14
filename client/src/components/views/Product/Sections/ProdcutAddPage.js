@@ -30,6 +30,8 @@ function ProdcutAddPage(props) {
   const [PreviewVisible, setPreviewVisible] = useState(false);
   const [PreviewTitle, setPreviewTitle] = useState("");
   const [ServiceCycle, setServiceCycle] = useState("1");
+  const [Configuration, setConfiguration] = useState("");
+  const [Size, setSize] = useState("");
 
   const changePriceHandler = (value) => {
     setPrice(value);
@@ -41,6 +43,12 @@ function ProdcutAddPage(props) {
 
   const changeProductTitleHandler = (e) => {
     setProductTitle(e.currentTarget.value);
+  };
+  const changeConfigurationHandler = (e) => {
+    setConfiguration(e.currentTarget.value);
+  };
+  const changeSizeHandler = (e) => {
+    setSize(e.currentTarget.value);
   };
   const changeDescriptionHandler = (e) => {
     setDescription(e.currentTarget.value);
@@ -103,6 +111,8 @@ function ProdcutAddPage(props) {
       title: ProductTitle,
       discription: Description,
       price: Price,
+      size: Size,
+      configuration: Configuration,
       cycle: ServiceCycle,
       quantity: Quantity,
       images: FileList,
@@ -132,7 +142,7 @@ function ProdcutAddPage(props) {
         <Input onChange={changeProductTitleHandler} value={ProductTitle} />
         <br />
         <br />
-        {/* 상품 설명 */}
+        {/* 상품 소개 */}
         <label htmlFor="">Description</label>
         <TextArea onChange={changeDescriptionHandler} value={Description} />
         <br />
@@ -145,7 +155,13 @@ function ProdcutAddPage(props) {
             <label htmlFor="productPrice">Quantity</label>
           </Col>
         </Row>
-
+        <br />
+        <br />
+        <label htmlFor="">configuration</label>
+        <Input onChange={changeConfigurationHandler} value={Configuration} />
+        <br />
+        <br />
+        <Input onChange={changeSizeHandler} value={Size} />
         <Row gutter={16}>
           <Col span={8}>
             {/* 상품가격 */}

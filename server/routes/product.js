@@ -46,6 +46,7 @@ router.post("", async (req, res) => {
   // 트랜젝션 세션 생성
   SESSION.startTransaction();
 
+  //첫번째 이미지 썸네일 파일로 저장
   req.body.thumbnail = req.body.images[0] ? req.body.images[0].response.url : "";
   const product = new Product(req.body);
   try {
@@ -93,6 +94,20 @@ router.get("/seller/:id", (req, res) => {
       });
     });
 });
+
+// 전체 상품목록 가져오기
+router.get("", (req, res) => {
+  Product.find()
+    .populate("seller")
+    .exec((err, product) => {
+      if (err) return res.status(400).json({ success: false, err });
+      return res.status(200).json({
+        success: true,
+        product,
+      });
+    });
+});
+
 // 상품상세 가져오기
 router.get("/:id", (req, res) => {
   const productId = req.params.id;

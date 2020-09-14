@@ -29,6 +29,14 @@ const productSchema = mongoose.Schema({
     // 썸네일
     type: String,
   },
+  size: {
+    // 크기
+    type: String,
+  },
+  configuration: {
+    // 상품구성
+    type: String,
+  },
   quantity: {
     // 판매수량
     type: Number,
