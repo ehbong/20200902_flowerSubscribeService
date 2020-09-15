@@ -116,9 +116,13 @@ router.get("/:id", (req, res) => {
     .populate("seller")
     .exec((err, product) => {
       if (err) return res.status(400).json({ success: false, err });
-      return res.status(200).json({
-        success: true,
-        product,
+      Image.find({ productId: productId }).exec((err, images) => {
+        if (err) return res.status(400).json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+          product,
+          images,
+        });
       });
     });
 });

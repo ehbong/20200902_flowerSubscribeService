@@ -4,23 +4,35 @@ import Axios from "axios";
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Image, Typography, Descriptions, Button } from "antd";
+import { Row, Col, Image, Typography, Descriptions, Button } from "antd";
 const { Title } = Typography;
 
 function ProductDetailPage(props) {
   const productId = props.match.params.productId;
   console.log(productId);
-  const [Product, setProduct] = useState([]);
+  const [Product, setProduct] = useState({});
+  const [ImageList, setImageList] = useState([]);
   useEffect(() => {
     Axios.get(`/api/product/${productId}`).then((res) => {
       if (res.data.success) {
         console.log(res.data);
         setProduct(res.data.product[0]);
+        setImageList(res.data.images);
       } else {
         alert("상품상세정보 가져오기를 실패 했습니다.");
       }
     });
   }, []);
+
+  const images = ImageList.map((obj, idx) => {
+    return (
+      <Col lg={6} md={8} xs={24} key={idx}>
+        <div style={{ position: "relative" }}>
+          <img style={{ width: "100%", height: "320px" }} src={`http://localhost:5000/${obj.filePath}`} alt={`${Product.title}_image${idx}`} />
+        </div>
+      </Col>
+    );
+  });
 
   return (
     Product && (
@@ -51,6 +63,7 @@ function ProductDetailPage(props) {
             <Descriptions.Item label="discription">{Product.discription}</Descriptions.Item>
           </Descriptions>
         </div>
+        {ImageList && <Row gutter={[16, 16]}>{images}</Row>}
       </React.Fragment>
     )
   );

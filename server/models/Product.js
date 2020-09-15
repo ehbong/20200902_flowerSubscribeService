@@ -37,6 +37,10 @@ const productSchema = mongoose.Schema({
     // 상품구성
     type: String,
   },
+  CountryOfOrigin: {
+    // 원산지
+    type: String,
+  },
   quantity: {
     // 판매수량
     type: Number,

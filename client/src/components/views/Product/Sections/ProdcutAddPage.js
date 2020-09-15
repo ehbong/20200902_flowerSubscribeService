@@ -31,6 +31,7 @@ function ProdcutAddPage(props) {
   const [PreviewTitle, setPreviewTitle] = useState("");
   const [ServiceCycle, setServiceCycle] = useState("1");
   const [Configuration, setConfiguration] = useState("");
+  const [CountryOfOrigin, setCountryOfOrigin] = useState("");
   const [Size, setSize] = useState("");
 
   const changePriceHandler = (value) => {
@@ -102,6 +103,9 @@ function ProdcutAddPage(props) {
   const changeCycleHandle = (value) => {
     setServiceCycle(value);
   };
+  const changeCountryOfOriginHandle = (value) => {
+    setCountryOfOrigin(value);
+  };
   // SUBMIT 처리 함수
   const onSubmitHandle = (e) => {
     e.preventDefault();
@@ -113,6 +117,7 @@ function ProdcutAddPage(props) {
       price: Price,
       size: Size,
       configuration: Configuration,
+      countryOfOrigin: CountryOfOrigin,
       cycle: ServiceCycle,
       quantity: Quantity,
       images: FileList,
@@ -159,6 +164,10 @@ function ProdcutAddPage(props) {
         <br />
         <label htmlFor="">configuration</label>
         <Input onChange={changeConfigurationHandler} value={Configuration} />
+        <br />
+        <br />
+        <label htmlFor="">Country Of Origin</label>
+        <Input onChange={changeCountryOfOriginHandle} value={Configuration} />
         <br />
         <br />
         <Input onChange={changeSizeHandler} value={Size} />
