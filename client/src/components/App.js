@@ -12,6 +12,7 @@ import Footer from "./views/Footer/Footer";
 import ProductPage from "./views/Product/ProductPage";
 import ProductAddPage from "./views/Product/Sections/ProdcutAddPage";
 import ProductDetailPage from "./views/Product/Sections/ProductDetailPage";
+import SubScribePaymentPage from "./views/Product/Sections/SubScribePaymentPage";
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -27,7 +28,8 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/product/list" component={Auth(ProductPage, true)} />
-          <Route exact path="/product/:productId" component={Auth(ProductDetailPage, true)} />
+          <Route exact path="/product/detail/:productId" component={Auth(ProductDetailPage, true)} />
+          <Route exact path="/product/subscribe/:productId" component={Auth(SubScribePaymentPage, true)} />
           <Route exact path="/product/add" component={Auth(ProductAddPage, true)} />
         </Switch>
       </div>

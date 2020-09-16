@@ -26,13 +26,18 @@ function ProductDetailPage(props) {
 
   const images = ImageList.map((obj, idx) => {
     return (
-      <Col lg={6} md={8} xs={24} key={idx}>
+      <Col lg={6} md={8} xs={24} key={idx} style={{ minWidth: "300px", maxWidth: "500px", margin: "20px" }}>
         <div style={{ position: "relative" }}>
           <img style={{ width: "100%", height: "320px" }} src={`http://localhost:5000/${obj.filePath}`} alt={`${Product.title}_image${idx}`} />
         </div>
       </Col>
     );
   });
+
+  const subScribeHandler = (e) => {
+    console.log("결제 페이지로 이동");
+    props.history.push(`/product/subscribe/${productId}`);
+  };
 
   return (
     Product && (
@@ -48,7 +53,7 @@ function ProductDetailPage(props) {
             <br />
             <Title level={3}>{`Remaining inventory ${Product.quantity}`}</Title>
             <br />
-            <Button type="primary" size={"large"}>
+            <Button type="primary" onClick={subScribeHandler} size={"large"}>
               SubScribe
             </Button>
           </div>

@@ -37,11 +37,9 @@ function ProdcutAddPage(props) {
   const changePriceHandler = (value) => {
     setPrice(value);
   };
-
   const changeQuantityHandler = (value) => {
     setQuantity(value);
   };
-
   const changeProductTitleHandler = (e) => {
     setProductTitle(e.currentTarget.value);
   };
@@ -54,7 +52,6 @@ function ProdcutAddPage(props) {
   const changeDescriptionHandler = (e) => {
     setDescription(e.currentTarget.value);
   };
-
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -63,12 +60,10 @@ function ProdcutAddPage(props) {
     setPreviewVisible(true);
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf("/") + 1));
   };
-
   const handleChange = ({ fileList }) => {
     console.log(fileList);
     return setFileList(fileList);
   };
-
   const handleCancel = () => setPreviewVisible(false);
   // 업로드 버튼
   const uploadButton = (
@@ -99,12 +94,11 @@ function ProdcutAddPage(props) {
       }
     });
   };
-
   const changeCycleHandle = (value) => {
     setServiceCycle(value);
   };
-  const changeCountryOfOriginHandle = (value) => {
-    setCountryOfOrigin(value);
+  const changeCountryOfOriginHandle = (e) => {
+    setCountryOfOrigin(e.currentTarget.value);
   };
   // SUBMIT 처리 함수
   const onSubmitHandle = (e) => {
@@ -152,6 +146,21 @@ function ProdcutAddPage(props) {
         <TextArea onChange={changeDescriptionHandler} value={Description} />
         <br />
         <br />
+
+        <br />
+        <br />
+        <label htmlFor="">configuration</label>
+        <Input onChange={changeConfigurationHandler} value={Configuration} />
+        <br />
+        <br />
+        <label htmlFor="">Country Of Origin</label>
+        <Input onChange={changeCountryOfOriginHandle} value={CountryOfOrigin} />
+        <br />
+        <br />
+        <label htmlFor="">product size</label>
+        <Input onChange={changeSizeHandler} value={Size} />
+        <br />
+        <br />
         <Row gutter={16}>
           <Col span={8}>
             <label htmlFor="productPrice">Price</label>
@@ -160,17 +169,6 @@ function ProdcutAddPage(props) {
             <label htmlFor="productPrice">Quantity</label>
           </Col>
         </Row>
-        <br />
-        <br />
-        <label htmlFor="">configuration</label>
-        <Input onChange={changeConfigurationHandler} value={Configuration} />
-        <br />
-        <br />
-        <label htmlFor="">Country Of Origin</label>
-        <Input onChange={changeCountryOfOriginHandle} value={Configuration} />
-        <br />
-        <br />
-        <Input onChange={changeSizeHandler} value={Size} />
         <Row gutter={16}>
           <Col span={8}>
             {/* 상품가격 */}

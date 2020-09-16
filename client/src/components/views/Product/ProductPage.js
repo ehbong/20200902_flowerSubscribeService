@@ -52,7 +52,7 @@ function ProductPage(props) {
       }
       renderItem={(item) => (
         <React.Fragment>
-          <a href={`/product/${item._id}`}>
+          <a href={`/product/detail/${item._id}`}>
             <Title level={3}>{item.title}</Title>
           </a>
           <List.Item
