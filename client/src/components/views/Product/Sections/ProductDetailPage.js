@@ -6,6 +6,8 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Row, Col, Image, Typography, Descriptions, Button } from "antd";
 import Comment from "./Comment";
+import { BASE_URL } from "./../../../Config";
+
 const { Title } = Typography;
 
 function ProductDetailPage(props) {
@@ -41,7 +43,7 @@ function ProductDetailPage(props) {
     return (
       <Col lg={6} md={8} xs={24} key={idx} style={{ minWidth: "200px", maxWidth: "240px", margin: "10px" }}>
         <div style={{ position: "relative" }}>
-          <img style={{ width: "100%", height: "320px" }} src={`http://localhost:5000/${obj.filePath}`} alt={`${Product.title}_image${idx}`} />
+          <img style={{ width: "100%", height: "320px" }} src={`${BASE_URL}${obj.filePath}`} alt={`${Product.title}_image${idx}`} />
         </div>
       </Col>
     );
@@ -60,7 +62,7 @@ function ProductDetailPage(props) {
       <React.Fragment>
         <div style={{ display: "block", maxWidth: "1200px", padding: "0 10px", margin: "20px auto 120px" }}>
           <div style={{ display: "inline-block", width: "50%", position: "relative", height: "auto", verticalAlign: "top" }}>
-            <Image width={500} src={`http://localhost:5000/${Product.thumbnail}`} />
+            <Image width={500} src={`${BASE_URL}${Product.thumbnail}`} />
           </div>
           <div style={{ display: "inline-block", width: "calc(50% - 20px)", height: "auto", verticalAlign: "top", marginLeft: "20px" }}>
             <Title level={1}>{Product.title}</Title>
