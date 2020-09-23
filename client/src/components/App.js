@@ -13,6 +13,7 @@ import ProductPage from "./views/Product/ProductPage";
 import ProductAddPage from "./views/Product/Sections/ProdcutAddPage";
 import ProductDetailPage from "./views/Product/Sections/ProductDetailPage";
 import SubScribePaymentPage from "./views/Product/Sections/SubScribePaymentPage";
+import ExcelUpload from "./views/Product/Sections/ExcelUpload";
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/product/list" component={Auth(ProductPage, true)} />
           <Route exact path="/product/detail/:productId" component={Auth(ProductDetailPage, true)} />
           <Route exact path="/product/subscribe/:productId" component={Auth(SubScribePaymentPage, true)} />
+          <Route exact path="/product/excelUpload" component={Auth(ExcelUpload, false)} />
           <Route exact path="/product/add" component={Auth(ProductAddPage, true)} />
         </Switch>
       </div>
